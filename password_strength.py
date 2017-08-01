@@ -19,9 +19,9 @@ def check_special_characters(password):
     return bool(re.search('[$,#,@,\!]', password))
     
     
-def check_substrings_containing(password, user_info =[]):
-    for info in user_info:
-        if password in info:
+def check_substrings_containing(password, user_account =[]):
+    for word in user_account:
+        if password in word:
             return True
     return False    
 
@@ -46,43 +46,36 @@ def check_standard_formats(password):
         if bool(re.search(expr, password)):
             return True    
     return False
+    
+
+def get_checks():
+    return [(check_upper_lower, 2, 0), (check_digits_and_strings, 1, 0),
+        (check_special_characters, 1, 0), 
+        (check_substrings_containing, 1, -2, user_account),
+        (check_substrings_containing, 1, -2, abbreviations),
+        (check_standard_formats, 1, -2),
+    ]   
 
 
 def get_password_strength(password, blacklist = [], 
-                        user_info = [], abbreviations = []):
+                        user_account = [], abbreviations = []):
     strength = 1
     if len(password) <= 3 or password in blacklist:
-        return strength;
+        return strength
     elif len(password) > 8:
         strength += 2
     elif len(password) > 6:
-        strength += 1    
-        
-    if check_upper_lower(password): 
-        strength += 2
-    
-    if check_digits_and_strings(password):
         strength += 1
     
-    if check_special_characters(password):
-        strength += 1
+    for check in get_checks():
         
-    # check personal info
-    if check_substrings_containing(password, user_info):
-        strength = (1 if strength < 4 else strength - 3)
-    else:
-        strength += 1
-        
-    # check abbreviations
-    if check_substrings_containing(password, abbreviations):
-        strength = (1 if strength < 3 else strength - 2)
-    else:
-        strength += 1
-        
-    if check_standard_formats(password):
-        strength = (1 if strength < 3 else strength - 2)
-    else:
-        strength += 1
+        check_done = (check[0](password) if len(check) <= 3 else
+            check[0](password, check[3]))
+            
+        if check_done:
+            strength = (1 if strength <= abs(check[2]) else strength + check[2])
+        else:
+            strength += check[1]
     
     return strength 
 
@@ -92,14 +85,14 @@ if __name__ == '__main__':
         blacklist = ([] if len(sys.argv) <= 2 else 
             convert_text_to_words(load_file(sys.argv[2])))
             
-        user_info = ([] if len(sys.argv) <= 3 else 
+        user_account = ([] if len(sys.argv) <= 3 else 
             convert_text_to_words(load_file(sys.argv[3])))
             
         abbreviations = ([] if len(sys.argv) <= 4 else 
             convert_text_to_words(load_file(sys.argv[4])))
    
         password_strength = get_password_strength(sys.argv[1], blacklist,
-                                                user_info, abbreviations)
+                                                user_account, abbreviations)
         print('password strength is {0} of 10'.format(password_strength))
         sys.exit(0)
     else:

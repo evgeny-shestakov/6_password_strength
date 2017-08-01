@@ -42,7 +42,9 @@ functions:
 
 - check_standard_formats(password):
   check password is in some standard formats
-
+  
+- get_checks():
+  return check functions and they params   
 
 - get_password_strength(password, blacklist = [], 
                         user_info = [], abbreviations = [])
