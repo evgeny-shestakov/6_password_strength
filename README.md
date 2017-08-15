@@ -1,6 +1,9 @@
 # Uses
 - sys
 - re
+- os.path
+- argparse
+- string
 
 
 # Password Strength Calculator
@@ -52,20 +55,29 @@ functions:
 
 # How to use
 
-launch: ./python password_strength.py 'some password' [blacklist file] [user personal info file] [abbreviations file]
+launch: ./python password_strength.py 'some password' --password [--blacklist_filepath] [--user_personal_filepath] [--abbreviations_filepath]
 
 ```#!bash
 
-python password_strength.py 'bad' blacklist.txt userpersonal.txt abbreviations.txt                                                                                 
+python password_strength.py                                                                                                                                        
+usage: Password strength [-h] --password PASSWORD                                                                                                                                                                   
+                         [--blacklist_filepath BLACKLIST_FILEPATH]                                                                                                                                                  
+                         [--user_account_filepath USER_ACCOUNT_FILEPATH]                                                                                                                                            
+                         [--abbreviations_filepath ABBREVIATIONS_FILEPATH]
+Password strength: error: the following arguments are required: --password/-p
+
+
+python password_strength.py 'bad' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                                 
 password strength is 1 of 10
 
 
-python password_strength.py 'Better' blacklist.txt userpersonal.txt abbreviations.txt                                                                              
+python password_strength.py 'Better' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                              
 password strength is 6 of 10
 
 
-python password_strength.py 'VeryGood!1' blacklist.txt userpersonal.txt abbreviations.txt                                                                          
-password strength is 10 of 10                         
+python password_strength.py 'VeryGood!1' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                          
+password strength is 10 of 10 
+                     
 
 ```
 
