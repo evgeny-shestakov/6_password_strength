@@ -22,11 +22,8 @@ def check_special_characters(password):
     return set(list(password)) & set(list(string.punctuation)) != set()
     
     
-def check_substrings_containing(password, user_account =[]):
-    for word in user_account:
-        if password in word:
-            return True
-    return False    
+def check_substrings_containing(password, substrings):
+    return any(word in password for word in substrings)  
 
  
 def check_digits_and_strings(password):
@@ -60,8 +57,8 @@ def get_checks(user_account, abbreviations):
     ]   
 
 
-def get_password_strength(password, blacklist = [], 
-                        user_account = [], abbreviations = []):
+def get_password_strength(password, blacklist, 
+                        user_account, abbreviations):
     strength = 1
     if len(password) <= 3 or password in blacklist:
         return strength
