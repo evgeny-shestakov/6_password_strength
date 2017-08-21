@@ -19,7 +19,7 @@ def convert_text_to_words(raw_text):
 
 
 def check_special_characters(password):
-    return set(list(password)) & set(list(string.punctuation)) != set()
+    return set(password).intersection(string.punctuation) != set()
     
     
 def check_substrings_containing(password, substrings):
@@ -112,5 +112,4 @@ if __name__ == '__main__':
     password_strength = get_password_strength(args['password'], blacklist,
                                                 user_account, abbreviations)
     print('password strength is {0} of 10'.format(password_strength))
-    sys.exit(0)
           
