@@ -2,7 +2,15 @@ import sys
 import re
 import os.path
 import argparse
+import getpass
 import string
+
+
+class Password(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string):
+        if values is None:
+            values = getpass.getpass()
+        setattr(namespace, self.dest, values)
 
 
 def load_file(filepath):
@@ -82,7 +90,8 @@ def get_password_strength(password, blacklist,
     
 def get_argvs():
     parser = argparse.ArgumentParser(prog='Password strength')
-    parser.add_argument('--password', '-p', type=str, required=True, 
+    parser.add_argument('--password', '-p', action=Password, nargs='?',
+                      type=str, required=True, 
                       help="please add password as --password='SomePassword'")
     parser.add_argument('--blacklist_filepath', '-b', type=str,
                       help="please add blacklist file as" +

@@ -3,6 +3,7 @@
 - re
 - os.path
 - argparse
+- getpass
 - string
 
 
@@ -66,17 +67,19 @@ usage: Password strength [-h] --password PASSWORD
                          [--abbreviations_filepath ABBREVIATIONS_FILEPATH]
 Password strength: error: the following arguments are required: --password/-p
 
-
-python password_strength.py 'bad' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                                 
+python password_strength.py -p -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                                                                                    
+Password: <bad>                                                                                 
 password strength is 1 of 10
 
 
-python password_strength.py 'Better' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                              
+python password_strength.py -p -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'
+Password: <Better>                                                                               
 password strength is 6 of 10
 
 
-python password_strength.py 'VeryGood!1' -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'                                                                          
-password strength is 10 of 10 
+python password_strength.py -p -b='blacklist.txt' -u='userpersonal.txt' -a='abbreviations.txt'
+Password: <VeryGood!1>                                                                               
+password strength is 10 of 10
                      
 
 ```
