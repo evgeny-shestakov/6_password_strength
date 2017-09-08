@@ -107,8 +107,9 @@ def get_argvs():
     
     
 def load_filedata_to_words(args, file_type):
-    return ([] if args[file_type] is None else 
+    words  ([] if args[file_type] is None else 
         convert_text_to_words(load_file(args[file_type])))
+    return words    
 
 
 if __name__ == '__main__':
