@@ -35,8 +35,8 @@ def check_substrings_containing(password, substrings):
 
  
 def check_digits_and_strings(password):
-    return (any(symbol.isdigit() for symbol in password) and 
-        any(not symbol.isdigit() for symbol in password))
+    have_digit = any(symbol.isdigit() for symbol in password
+    return have_digit and any(not symbol.isdigit() for symbol in password)
 
 
 def check_upper_lower(password):
